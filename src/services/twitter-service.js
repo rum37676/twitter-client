@@ -51,51 +51,53 @@ import Fixtures from './fixtures';
 import {LoginStatus} from './messages';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import AsyncHttpClient from './async-http-client';
+import { CompositionTransaction } from 'aurelia-framework';
 
-@inject(Fixtures, EventAggregator, AsyncHttpClient)
+@inject(Fixtures, EventAggregator, AsyncHttpClient, CompositionTransaction)
 export default class TwitterService {
 
   users = [];
   tweets = [];
 
-  constructor(data, ea, ac) {
-    this.tweets = data.tweets;
+  constructor(data, ea, ac, compositionTransaction) {
     this.ea = ea;
     this.ac = ac;
-    ea.subscribe(LoginStatus, msg => {
-      console.log('twitter-service subscribe');
-      console.log(msg);
+    this.compositionTransaction = compositionTransaction;
+    this.compositionTransactionNotifier = null;
+
+    this.ea.subscribe(LoginStatus, msg => {
       if (msg.status.success === true) {
-        console.log('im IF');
         this.updateData();
       }
     });
   }
 
+  updateData() {
+    this.compositionTransactionNotifier = this.compositionTransaction.enlist();
+    console.log(this.tweets);
+    return Promise.all([
+      this.ac.get('/api/tweets'),
+      this.ac.get('/api/users')
+    ]).then(res => {
+      this.tweets = res[0].content;
+      this.users = res[1].content;
+
+      console.log('Successfully logged in');
+      this.compositionTransactionNotifier.done();
+    }).catch(error => {
+      console.error(error);
+    });
+  }
 
   saveTweet(text) {
     console.log('saveTweet');
     const tweet = {
-      tweeter: {
-        username: 'test tweeter',
-        name: 'test tweeter',
-        email: 'test tweeter',
-        password: 'test tweeter'
-      },
       text: text
     };
-    this.tweets.push(tweet);
-    console.log(this.tweets);
-    /*this.ac.post('/api/tweets', tweet).then(res => {
+    this.ac.post('/api/tweets', tweet).then(res => {
       this.tweets.push(res.content);
-    });*/
-  }
-
-  updateData() {
-    console.log('updateData');
-    console.log(this.users);
-    this.getUsers();
-    console.log(this.users);
+    });
+    console.log(this.tweets);
   }
 
   isAuthenticated() {
@@ -104,6 +106,12 @@ export default class TwitterService {
 
   getUsers() {
     this.ac.get('/api/users').then(res => {
+      this.users = res.content;
+    });
+  }
+
+  getTweets() {
+    this.ac.get('/api/tweets').then(res => {
       this.users = res.content;
     });
   }

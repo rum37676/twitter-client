@@ -11,8 +11,8 @@ export class Home {
 
   configureRouter(config, router) {
     config.map([
-      { route: ['', 'home'], name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
-      { route: 'personalTweets', name: 'personalTweets', moduleId: 'viewmodels/personalTweets/personalTweets', nav: true, title: 'Personal Tweets' },
+      { route: 'startScreen', name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
+      { route: ['', 'home'], name: 'personalTweets', moduleId: 'viewmodels/personalTweets/personalTweets', nav: true, title: 'Personal Tweets' },
       { route: 'dashboard', name: 'dashboard', moduleId: 'viewmodels/dashboard/dashboard', nav: true, title: 'Dashboard' },
       { route: 'logout', name: 'logout', moduleId: 'viewmodels/logout/logout', nav: true, title: 'Logout' }
     ]);
@@ -23,10 +23,12 @@ export class Home {
     });
   }
 
-  /*attached() {
-    if (this.donationService.isAuthenticated()) {
-      this.donationService.updateData();
-      console.log('home attached!');
+  attached() {
+    console.log('home attached isAthenticated');
+    if (this.twitterService.isAuthenticated()) {
+      this.twitterService.updateData();
     }
-  }*/
+    console.log('home attached');
+    console.log(this.twitterService.tweets);
+  }
 }

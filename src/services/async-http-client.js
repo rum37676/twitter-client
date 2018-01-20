@@ -20,19 +20,11 @@ export default class AsyncHttpClient {
     let authenticated = false;
     if (localStorage.sessionTokenTwitter !== 'null' && typeof localStorage.sessionTokenTwitter !== 'undefined') {
       authenticated = true;
-      const auth = JSON.parse(localStorage.sessionTokenTwitter);
       this.http.configure(http => {
+        const auth = JSON.parse(localStorage.sessionTokenTwitter);
         http.withHeader('Authorization', 'bearer ' + auth.token);
       });
-      const status = {
-        success: true,
-        token: auth.token
-      }
-      console.log('user is authenticated');
-      console.log(status);
-      this.ea.publish(new LoginStatus(status));
     }
-    console.log('user not authenticated')
     return authenticated;
   }
 

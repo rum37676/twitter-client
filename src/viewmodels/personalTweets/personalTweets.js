@@ -15,10 +15,11 @@ export class Donate {
   createTweet() {
     console.log('personalTweets: ' + this.tweetText);
     this.twitterService.saveTweet(this.tweetText);
+    this.tweetText = '';
   }
 
   attached() {
-    //this.donationService.updateData();
+    this.twitterService.updateData();
     console.log(this.tweets);
   }
 }
