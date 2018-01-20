@@ -1,0 +1,29 @@
+<template>
+
+  <form submit.trigger="createTweet()" class="ui form stacked segment">
+
+    <h3 class='ui dividing header'> Personal Timeline </h3>
+    <div class="grouped inline fields">
+      <div class="field">
+        <label>Text</label> <input type="textfield" value.bind="tweetText">
+      </div>
+    </div>
+
+    <button class="ui blue submit button">Twittern</button>
+
+  </form>
+
+  <table class="ui celled table segment">
+    <tbody>
+    <tr repeat.for="tweet of tweets">
+      <td>
+        <h5 class='ui header'>${tweet.tweeter.username}</h5>
+        <div class="field">
+          ${tweet.text}
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</template>
