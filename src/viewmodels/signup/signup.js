@@ -4,13 +4,13 @@ import TwitterService from '../../services/twitter-service';
 @inject(TwitterService)
 export class Signup {
 
-  firstName = 'Marge';
-  lastName = 'Simpson';
+  username = 'margeSimpson';
+  name = 'Margarete Simspon';
   email = 'marge@simpson.com';
   password = 'secret';
 
   constructor(ts) {
-    this.twitterService = ds;
+    this.twitterService = ts;
   }
 
   register(e) {

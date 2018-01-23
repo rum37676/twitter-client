@@ -97,21 +97,16 @@ export default class TwitterService {
     });
   }
 
-  saveTweet(text, imageList) {
-    console.log('saveTweet');
-    console.log(imageList);
+  saveTweet(tweetText, tweetImage) {
     let formData = new FormData();
-    formData.append('text', text);
-    formData.append('imageList', imageList);
-    /*const tweet = {
-      text: text,
-      imgages: formData
-    };*/
-    console.log(formData);
+    formData.append('tweetText', tweetText);
+    if (typeof tweetImage !== 'undefined') {
+      formData.append('tweetImage', tweetImage);
+    }
+
     this.ac.post('/api/tweets', formData).then(res => {
       this.tweets.unshift(res.content);
     });
-    console.log(this.tweets);
   }
 
   follow(user) {

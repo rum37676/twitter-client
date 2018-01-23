@@ -6,8 +6,8 @@ export class PersonalTweet {
 
   tweets = [];
   tweetText = '';
-  selectedFiles = null;
   imageList = [];
+  selectedFiles = null;
 
 
   constructor(ts) {
@@ -16,11 +16,12 @@ export class PersonalTweet {
   }
 
   createTweet() {
-    console.log('personalTweets: ' + this.tweetText);
-    console.log(this.imageList);
-    this.twitterService.saveTweet(this.tweetText, this.imageList);
+    console.log(this.imageList[0]);
+    this.twitterService.saveTweet(this.tweetText, this.imageList[0]);
     this.tweetText = '';
-    //this.imageList = [];
+    this.tweetImage = undefined;
+    this.selectedFiles = null;
+    this.imageList = [];
   }
 
   test() {
@@ -31,7 +32,7 @@ export class PersonalTweet {
     this.twitterService.test2();
   }
 
-  addPicturesToArray(e) {
+  addPicturesToArray() {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.imageList.push(this.selectedFiles.item(i));
     }
@@ -39,9 +40,7 @@ export class PersonalTweet {
 
   attached() {
     this.tweets = this.twitterService.tweets;
-    //this.twitterService.updateData();
-    console.log('personal attached');
-    //console.log(this.tweets);
-    console.log('This is a test tweet' + this.tweets[0]);
+    console.log('personalTweets attached');
+    console.log(this.tweets);
   }
 }

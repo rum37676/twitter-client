@@ -2,74 +2,77 @@
   <require from="./blob-to-url"></require>
   <require from="./file-list-to-array"></require>
 
-  <form submit.trigger="createTweet()" class="ui form stacked segment">
+  <div class="ui grid">
+    <div class="three wide column"></div>
+    <div class="ten wide column">
 
-    <h3 class='ui dividing header'> Personal Timeline </h3>
-    <div class="grouped inline fields">
-      <div class="field">
-        <label>Text</label> <input type="textfield" value.bind="tweetText">
-      </div>
+      <form submit.delegate="createTweet()" class="ui form stacked segment">
 
-      <div class="field">
-        <input type="file" multiple accept="image/*" files.bind="selectedFiles" change.delegate="addPicturesToArray($event)">
+        <h3 class='ui dividing header'> Personal Timeline </h3>
 
-        <table>
-          <tr>
-            <th repeat.for="file of imageList">
-              <!--<h1>${file.name}: ${file.type} ${file.size / 1000} kb</h1>-->
-              <img src.bind="file | blobToUrl" height="100" width="100"><img>
-            </th>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <button class="ui blue submit button">Twittern</button>
-
-  </form>
-
-  <form submit.trigger="test()" class="ui form stacked segment">
-
-    <button class="ui blue submit button">Test</button>
-
-  </form>
-
-  <form submit.trigger="test2()" class="ui form stacked segment">
-
-    <button class="ui blue submit button">Test2</button>
-
-  </form>
-
-  <section class="ui raised segment">
-    <div class="ui small dividing header"> Picture Upload </div>
-    <section class="ui raised form segment">
-      <form action="/dashboard/uploadpicture" method="post" enctype="multipart/form-data">
-        <div class="two fields">
-          <div class="field">
-            <label>First Name</label>
-            <input type="file" name="picture">  </input>
-          </div>
-          <div class="field">
-            <label>Title</label>
-            <input placeholder="Title" type="text" name="title">
-          </div>
+        <div class="grouped inline fields">
+          <label>Text</label>
+          <textarea type="textarea" rows="3" maxlength="140" value.bind="tweetText"></textarea>
         </div>
-        <button class="ui mini blue submit button"> Upload </button>
-      </form>
-    </section>
-  </section>
 
-  <table class="ui celled table segment">
-    <tbody>
-    <tr repeat.for="tweet of tweets">
-      <td>
-        <h5 class='ui header'>${tweet.tweeter.username}</h5>
+        <div class="grouped inline fields">
+          <!--<input type="file" accept="image/*" name="tweetImage" id="tweetImage" files.bind="tweetImage" change.delegate="addPicturesToArray($event)">-->
+
+          <label>Image</label>
+          <input type="file" accept="image/*" name="image" id="image" files.bind="selectedFiles" change.delegate="addPicturesToArray($event)">
+
+          <table>
+            <tr>
+              <th repeat.for="file of imageList">
+                <img src.bind="file | blobToUrl" height="200" width="auto"><img>
+              </th>
+            </tr>
+          </table>
+        </div>
+        <button class="ui blue submit button">Twittern</button>
+
+      </form>
+
+      <div class="ui field piled segment" repeat.for="tweet of tweets">
+        <h3 class="ui dividing header">${tweet.tweeter.name} </h3>
+        <!--<div class="ui stackable two column grid">
+          <div class="column">
+            <h3 class="ui dividing header">${tweet.tweeter.name} </h3>
+          </div>
+          <div class="column">
+            <h6 class="ui header">@${tweet.tweeter.username}</h6>
+          </div>
+        </div>-->
         <div class="field">
           ${tweet.text}
         </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+        <div class="field">
+          <img src.bind="tweet.image_src" height="auto" width="100%"><img>
+        </div>
+      </div>
+
+      <!--<table class="ui celled table segment">
+        <tbody>
+        <tr repeat.for="tweet of tweets">
+          <td>
+            <div class="inline field">
+              <h5 class="ui header">${tweet.tweeter.name} </h5>
+              <h6 class="ui header">@${tweet.tweeter.username}</h6>
+            </div>
+            <div class="field">
+              ${tweet.text}
+            </div>
+            <div class="field">
+              <img src.bind="tweet.image_src" height="auto" width="100%"><img>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>-->
+
+
+    </div>
+    <div class="three wide column"></div>
+  </div>
 
 </template>
