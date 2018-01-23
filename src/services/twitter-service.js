@@ -57,8 +57,10 @@ import { CompositionTransaction } from 'aurelia-framework';
 export default class TwitterService {
 
   ownUser = null;
+  ownTweets = [];
   users = [];
   tweets = [];
+
 
   constructor(data, ea, ac, cT) {
     this.ea = ea;

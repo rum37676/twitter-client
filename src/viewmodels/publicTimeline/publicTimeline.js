@@ -24,14 +24,6 @@ export class PersonalTweet {
     this.imageList = [];
   }
 
-  test() {
-    this.twitterService.test();
-  }
-
-  test2() {
-    this.twitterService.test2();
-  }
-
   addPicturesToArray() {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.imageList.push(this.selectedFiles.item(i));
@@ -40,7 +32,7 @@ export class PersonalTweet {
 
   attached() {
     this.tweets = this.twitterService.tweets;
-    console.log('personalTweets attached');
+    console.log('publicTimeline attached');
     console.log(this.tweets);
   }
 }

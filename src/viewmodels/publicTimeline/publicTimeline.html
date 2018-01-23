@@ -33,46 +33,11 @@
 
       </form>
 
-      <div class="ui field piled segment" repeat.for="tweet of tweets">
-        <h3 class="ui dividing header">${tweet.tweeter.name} </h3>
-        <!--<div class="ui stackable two column grid">
-          <div class="column">
-            <h3 class="ui dividing header">${tweet.tweeter.name} </h3>
-          </div>
-          <div class="column">
-            <h6 class="ui header">@${tweet.tweeter.username}</h6>
-          </div>
-        </div>-->
-        <div class="field">
-          ${tweet.text}
-        </div>
-        <div class="field">
-          <img src.bind="tweet.image_src" height="auto" width="100%"><img>
-        </div>
-      </div>
-
-      <!--<table class="ui celled table segment">
-        <tbody>
-        <tr repeat.for="tweet of tweets">
-          <td>
-            <div class="inline field">
-              <h5 class="ui header">${tweet.tweeter.name} </h5>
-              <h6 class="ui header">@${tweet.tweeter.username}</h6>
-            </div>
-            <div class="field">
-              ${tweet.text}
-            </div>
-            <div class="field">
-              <img src.bind="tweet.image_src" height="auto" width="100%"><img>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>-->
-
-
     </div>
     <div class="three wide column"></div>
   </div>
 
+  <compose view-model="../timeline/timeline" model.bind="tweets"></compose>
+
 </template>
+
