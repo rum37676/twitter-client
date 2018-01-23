@@ -13,6 +13,7 @@ export class Home {
     config.map([
       { route: 'startScreen', name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
       { route: ['', 'home'], name: 'personalTweets', moduleId: 'viewmodels/personalTweets/personalTweets', nav: true, title: 'Personal Tweets' },
+      { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users' },
       { route: 'dashboard', name: 'dashboard', moduleId: 'viewmodels/dashboard/dashboard', nav: true, title: 'Dashboard' },
       { route: 'logout', name: 'logout', moduleId: 'viewmodels/logout/logout', nav: true, title: 'Logout' }
     ]);
@@ -24,11 +25,11 @@ export class Home {
   }
 
   attached() {
-    console.log('home attached isAthenticated');
+    //console.log('home attached isAthenticated');
     if (this.twitterService.isAuthenticated()) {
       this.twitterService.updateData();
     }
-    console.log('home attached');
-    console.log(this.twitterService.tweets);
+    //console.log('home attached');
+    //console.log(this.twitterService.tweets);
   }
 }

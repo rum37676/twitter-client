@@ -1,4 +1,6 @@
 <template>
+  <require from="./blob-to-url"></require>
+  <require from="./file-list-to-array"></require>
 
   <form submit.trigger="createTweet()" class="ui form stacked segment">
 
@@ -7,11 +9,55 @@
       <div class="field">
         <label>Text</label> <input type="textfield" value.bind="tweetText">
       </div>
+
+      <div class="field">
+        <input type="file" multiple accept="image/*" files.bind="selectedFiles" change.delegate="addPicturesToArray($event)">
+
+        <table>
+          <tr>
+            <th repeat.for="file of imageList">
+              <!--<h1>${file.name}: ${file.type} ${file.size / 1000} kb</h1>-->
+              <img src.bind="file | blobToUrl" height="100" width="100"><img>
+            </th>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <button class="ui blue submit button">Twittern</button>
 
   </form>
+
+  <form submit.trigger="test()" class="ui form stacked segment">
+
+    <button class="ui blue submit button">Test</button>
+
+  </form>
+
+  <form submit.trigger="test2()" class="ui form stacked segment">
+
+    <button class="ui blue submit button">Test2</button>
+
+  </form>
+
+  <section class="ui raised segment">
+    <div class="ui small dividing header"> Picture Upload </div>
+    <section class="ui raised form segment">
+      <form action="/dashboard/uploadpicture" method="post" enctype="multipart/form-data">
+        <div class="two fields">
+          <div class="field">
+            <label>First Name</label>
+            <input type="file" name="picture">  </input>
+          </div>
+          <div class="field">
+            <label>Title</label>
+            <input placeholder="Title" type="text" name="title">
+          </div>
+        </div>
+        <button class="ui mini blue submit button"> Upload </button>
+      </form>
+    </section>
+  </section>
 
   <table class="ui celled table segment">
     <tbody>

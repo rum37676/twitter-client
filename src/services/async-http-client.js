@@ -16,7 +16,7 @@ export default class AsyncHttpClient {
   }
 
   isAuthenticated() {
-    console.log('isAuthenticated?');
+    //console.log('isAuthenticated?');
     let authenticated = false;
     if (localStorage.sessionTokenTwitter !== 'null' && typeof localStorage.sessionTokenTwitter !== 'undefined') {
       authenticated = true;
@@ -29,7 +29,7 @@ export default class AsyncHttpClient {
   }
 
   authenticate(url, user) {
-    console.log('authentication');
+    //console.log('authentication');
     this.http.post(url, user).then(response => {
       const status = response.content;
       if (status.success) {
@@ -38,8 +38,8 @@ export default class AsyncHttpClient {
           configuration.withHeader('Authorization', 'bearer ' + response.content.token);
         });
       }
-      console.log('authentication successful');
-      console.log(status);
+      //console.log('authentication successful');
+      //console.log(status);
       this.ea.publish(new LoginStatus(status));
     }).catch(error => {
       const status = {

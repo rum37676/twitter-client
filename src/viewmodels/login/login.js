@@ -15,7 +15,7 @@ export class Login {
     this.prompt = '';
   }
 
-  login(e) {
+  login() {
     console.log(`Trying to log in ${this.email}`);
     this.twitterService.login(this.email.trim(), this.password.trim());
   }

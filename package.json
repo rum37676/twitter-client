@@ -12,6 +12,8 @@
     "aurelia-bootstrapper": "^2.1.1",
     "aurelia-http-client": "^1.2.1",
     "bluebird": "^3.4.1",
+    "cloudinary": "^1.9.1",
+    "form-data": "^2.3.1",
     "hapi-cors-headers": "^1.0.3",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text#latest"

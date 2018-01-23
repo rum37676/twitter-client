@@ -1,5 +1,5 @@
 {
-  "name": "donation-client",
+  "name": "twitter-client",
   "type": "project:application",
   "bundler": {
     "id": "cli",
@@ -64,6 +64,7 @@
           "aurelia-task-queue",
           "aurelia-templating",
           "aurelia-templating-binding",
+          "form-data",
           {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",

@@ -53,16 +53,17 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import AsyncHttpClient from './async-http-client';
 import { CompositionTransaction } from 'aurelia-framework';
 
-@inject(Fixtures, EventAggregator, AsyncHttpClient, CompositionTransaction)
+@inject(Fixtures, EventAggregator, AsyncHttpClient, CompositionTransaction, FormData)
 export default class TwitterService {
 
+  ownUser = null;
   users = [];
   tweets = [];
 
-  constructor(data, ea, ac, compositionTransaction) {
+  constructor(data, ea, ac, cT) {
     this.ea = ea;
     this.ac = ac;
-    this.compositionTransaction = compositionTransaction;
+    this.compositionTransaction = cT;
     this.compositionTransactionNotifier = null;
 
     this.ea.subscribe(LoginStatus, msg => {
@@ -72,32 +73,54 @@ export default class TwitterService {
     });
   }
 
+  test() {
+    console.log(this.users);
+  }
+
   updateData() {
     this.compositionTransactionNotifier = this.compositionTransaction.enlist();
-    console.log(this.tweets);
+    //console.log(this.tweets);
     return Promise.all([
       this.ac.get('/api/tweets'),
-      this.ac.get('/api/users')
+      this.ac.get('/api/users'),
+      this.ac.get('/api/users/me')
     ]).then(res => {
       this.tweets = res[0].content;
+      console.log(this.tweets);
       this.users = res[1].content;
+      this.ownUser = res[2].content;
 
-      console.log('Successfully logged in');
+      //console.log(this.ownUser);
       this.compositionTransactionNotifier.done();
     }).catch(error => {
       console.error(error);
     });
   }
 
-  saveTweet(text) {
+  saveTweet(text, imageList) {
     console.log('saveTweet');
-    const tweet = {
-      text: text
-    };
-    this.ac.post('/api/tweets', tweet).then(res => {
-      this.tweets.push(res.content);
+    console.log(imageList);
+    let formData = new FormData();
+    formData.append('text', text);
+    formData.append('imageList', imageList);
+    /*const tweet = {
+      text: text,
+      imgages: formData
+    };*/
+    console.log(formData);
+    this.ac.post('/api/tweets', formData).then(res => {
+      this.tweets.unshift(res.content);
     });
     console.log(this.tweets);
+  }
+
+  follow(user) {
+    console.log(user._id);
+    this.ac.post('/api/users/follow/' + user._id).then(res => {
+      this.users = res.content;
+      console.log('newUsers: ');
+      console.log(this.users);
+    });
   }
 
   isAuthenticated() {
