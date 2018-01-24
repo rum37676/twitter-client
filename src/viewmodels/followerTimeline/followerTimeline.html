@@ -1,0 +1,9 @@
+<template>
+  <h3 class='ui dividing header blue attached segment'> Personal Timeline </h3>
+
+  <div class="ui horizontal divider"></div>
+
+  <compose view-model="../tweet/tweet"></compose>
+
+  <compose view-model="../timeline/timeline" model.bind="tweets"></compose>
+</template>
