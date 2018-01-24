@@ -6,6 +6,9 @@
     "type": "???",
     "url": "???"
   },
+  "scripts": {
+    "start": "node app.js"
+  },
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",

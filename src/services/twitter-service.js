@@ -59,8 +59,9 @@ export default class TwitterService {
   }
 
   deleteTweet(tweet) {
-    console.log(this.tweets);
+    console.log('twitterService: deleteTweet');
     this.ac.delete('/api/tweets/' + tweet._id).then(res => {
+      console.log('Innerhalb von callback');
       const index = this.tweets.indexOf(tweet);
       if (index > -1) {
         this.tweets.splice(index, 1);

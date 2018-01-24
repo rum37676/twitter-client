@@ -1,6 +1,7 @@
 export default class Fixtures {
 
-  baseUrl = 'http://localhost:4000';
+  baseUrlLocal = 'http://localhost:4000';
+  baseUrlOnline = 'https://safe-brushlands-98673.herokuapp.com';
   users = [
     {
       username: 'user1',

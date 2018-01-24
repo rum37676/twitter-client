@@ -10,8 +10,7 @@ export class Timeline {
   }
 
   deleteTweet(tweet) {
-    console.log('delete Tweet');
-    console.log('Tweet');
+    console.log('timeline: delete Tweet');
     this.twitterService.deleteTweet(tweet);
   }
 
@@ -26,7 +25,7 @@ export class Timeline {
 
   activate(data) {
     this.tweets = data;
-    console.log('timeline attached');
+    console.log('timeline activate');
     console.log(this.tweets);
   }
 }

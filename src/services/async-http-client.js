@@ -10,7 +10,7 @@ export default class AsyncHttpClient {
   constructor(httpClient, fixtures, ea) {
     this.http = httpClient;
     this.http.configure(http => {
-      http.withBaseUrl(fixtures.baseUrl);
+      http.withBaseUrl(fixtures.baseUrlOnline);
     });
     this.ea = ea;
   }
