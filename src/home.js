@@ -12,10 +12,11 @@ export class Home {
   configureRouter(config, router) {
     config.map([
       { route: 'startScreen', name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
-      { route: 'personalTimeline', name: 'personalTimeline', moduleId: 'viewmodels/personalTimeline/personalTimeline', nav: true, title: 'Personal Timeline' },
-      { route: ['', 'home'], name: 'publicTimeline', moduleId: 'viewmodels/publicTimeline/publicTimeline', nav: true, title: 'Public Timeline' },
+      { route: 'followerTimeline', name: 'followerTimeline', moduleId: 'viewmodels/followerTimeline/followerTimeline', nav: true, title: 'Follower Timeline' },
+      { route: ['', 'home'], name: 'globalTimeline', moduleId: 'viewmodels/globalTimeline/globalTimeline', nav: true, title: 'Global Timeline' },
       { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users' },
       //{ route: 'dashboard', name: 'dashboard', moduleId: 'viewmodels/dashboard/dashboard', nav: true, title: 'Dashboard' },
+      { route: 'userTimeline/:id', name: 'userTimeline', moduleId: 'viewmodels/userTimeline/userTimeline', nav: false, title: 'userTimeline' },
       { route: 'logout', name: 'logout', moduleId: 'viewmodels/logout/logout', nav: true, title: 'Logout' }
     ]);
     this.router = router;

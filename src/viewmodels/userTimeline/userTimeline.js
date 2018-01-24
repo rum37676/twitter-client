@@ -5,24 +5,32 @@ import TwitterService from '../../services/twitter-service';
 export class UserTimeline {
 
   tweets = [];
+  userId = null;
   user = null;
 
   constructor(ts) {
     this.twitterService = ts;
-    console.log('constructor');
+    this.ownUser = ts.ownUser;
   }
 
-  activate(data) {
-    this.user = data;
+  activate(params) {
+    this.userId = params.id;
+    for (let user of this.twitterService.users) {
+      if (user._id === this.userId) {
+        this.user = user;
+      }
+    }
     for (let tweet of this.twitterService.tweets) {
-      if (tweet.tweeter._id === this.user._id) {
+      if (tweet.tweeter._id === this.userId) {
         this.tweets.push(tweet);
       }
     }
+    console.log('userTimeline activate')
+    console.log(this.tweets);
   }
 
   attached() {
-    console.log('personalTimeline attached');
+    console.log('userTimeline attached');
     console.log(this.tweets);
   }
 }

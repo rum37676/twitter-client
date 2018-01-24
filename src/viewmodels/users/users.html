@@ -1,39 +1,11 @@
 <template>
-  <template repeat.for="user of otherUsers">
-    <compose view-model="../usercard/usercard" model.bind="user"></compose>
-  </template>
-</template>
+  <h3 class='ui dividing header blue attached segment'> User Overview</h3>
 
+  <div class="ui horizontal divider"></div>
 
-
-
-<!--<template>
-  <table class="ui celled table segment">
-    <tbody>
-    <tr repeat.for="user of users">
-      <form submit.trigger="follow()" class="ui form stacked segment">
-        <td>
-          <h5 class='ui header'>${user.username}</h5>
-        </td>
-        <td>
-          <button class="ui blue submit button">Follow</button>
-        </td>
-      </form>
-    </tr>
-    </tbody>
-  </table>
-</template>-->
-
-
-
-<!--<template>
-  <require from="./users.css"></require>
-
-  <div class="wrapper">
-    <div class="box a">.a</div>
-    <div class="box b">.b</div>
-    <div class="box c">.c</div>
-    <div class="box d">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci repudiandae expedita cumque recusandae tempora incidunt, beatae impedit. Nobis maiores numquam libero iure cum quidem vero eius! Obcaecati, et. Reiciendis, vero.</div>
+  <div class="ui link five cards">
+    <div class="card" repeat.for="user of otherUsers">
+      <compose view-model="../usercard/usercard" model.bind="user"></compose>
+    </div>
   </div>
-
-</template>-->
+</template>

@@ -4,7 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {TweetUpdate} from '../../services/messages';
 
 @inject(TwitterService, EventAggregator)
-export class PersonalTimeline {
+export class FollowerTimeline {
 
   tweets = [];
   followedUsers = [];
@@ -14,12 +14,13 @@ export class PersonalTimeline {
     this.ea = ea;
     this.updateTweets();
     this.ea.subscribe(TweetUpdate, msg => {
-      console.log('personal subscribed');
+      console.log('followerTimeline subscribed');
       this.updateTweets();
     });
   }
 
   updateTweets() {
+    this.followedUsers = [];
     this.tweets = [];
     for (let user of this.twitterService.users){
       for (let follower of user.followers) {
@@ -43,7 +44,7 @@ export class PersonalTimeline {
   }
 
   attached() {
-    console.log('personalTimeline attached');
+    console.log('followerTimeline attached');
     console.log(this.tweets);
   }
 }

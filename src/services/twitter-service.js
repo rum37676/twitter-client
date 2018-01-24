@@ -1,54 +1,6 @@
-/*  constructor(data, ea, ac, compositionTransaction) {
-    this.methods = data.methods;
-    this.ea = ea;
-    this.ac = ac;
-    this.compositionTransaction = compositionTransaction;
-    this.compositionTransactionNotifier = null
-    ea.subscribe(LoginStatus, status => {
-      console.log('donation-service subscribe');
-      console.log(status);
-      if (status.info.success === true) {
-        console.log('im IF');
-        this.updateData();
-      }
-    });
-  }
-
-  updateData() {
-    console.log('donations');
-    console.log(this.donations);
-
-
-    this.compositionTransactionNotifier = this.compositionTransaction.enlist();
-
-    return Promise.all([
-      this.ac.get('/api/candidates'),
-      this.ac.get('/api/users'),
-      this.ac.get('/api/donations')
-    ]).then(res => {
-      this.candidates = res[0].content;
-      this.users = res[1].content;
-      this.donations = res[2].content;
-      this.compositionTransactionNotifier.done();
-      console.log('donations in Promise');
-      console.log(this.donations);
-    }).catch(error => {
-      console.error(error);
-    });
-
-    this.total = 0;
-    for (let donation of this.donations) {
-      this.total = this.total + donation.amount;
-    }
-    console.log(this.donations);
-    console.log('updatedData, total: ' + this.total);
-    this.ea.publish(new TotalUpdate(this.total));
-  }*/
-
-
 import {inject} from 'aurelia-framework';
 import Fixtures from './fixtures';
-import {LoginStatus} from './messages';
+import {LoginStatus, TweetUpdate} from './messages';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import AsyncHttpClient from './async-http-client';
 import { CompositionTransaction } from 'aurelia-framework';
@@ -75,24 +27,18 @@ export default class TwitterService {
     });
   }
 
-  test() {
-    console.log(this.users);
-  }
-
   updateData() {
     this.compositionTransactionNotifier = this.compositionTransaction.enlist();
-    //console.log(this.tweets);
     return Promise.all([
       this.ac.get('/api/tweets'),
       this.ac.get('/api/users'),
       this.ac.get('/api/users/me')
     ]).then(res => {
       this.tweets = res[0].content;
-      console.log(this.tweets);
       this.users = res[1].content;
       this.ownUser = res[2].content;
 
-      //console.log(this.ownUser);
+      this.ea.publish(new TweetUpdate(this.tweets));
       this.compositionTransactionNotifier.done();
     }).catch(error => {
       console.error(error);
@@ -108,16 +54,44 @@ export default class TwitterService {
 
     this.ac.post('/api/tweets', formData).then(res => {
       this.tweets.unshift(res.content);
+      this.ea.publish(new TweetUpdate());
     });
   }
 
-  follow(user) {
-    console.log(user._id);
-    this.ac.post('/api/users/follow/' + user._id).then(res => {
-      this.users = res.content;
-      console.log('newUsers: ');
-      console.log(this.users);
+  deleteTweet(tweet) {
+    console.log(this.tweets);
+    this.ac.delete('/api/tweets/' + tweet._id).then(res => {
+      const index = this.tweets.indexOf(tweet);
+      if (index > -1) {
+        this.tweets.splice(index, 1);
+        console.log('Tweet deleted');
+        console.log(this.tweets);
+      }
+      this.ea.publish(new TweetUpdate());
     });
+  }
+
+  follow(user, bool) {
+    if (bool) {
+      console.log('unfollow');
+      this.ac.delete('/api/users/follow/' + user._id).then(res => {
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id === res.content._id) {
+            this.users[i] = res.content;
+          }
+        }
+      });
+    }
+    else {
+      console.log('follow');
+      this.ac.post('/api/users/follow/' + user._id).then(res => {
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id === res.content._id) {
+            this.users[i] = res.content;
+          }
+        }
+      });
+    }
   }
 
   isAuthenticated() {
@@ -136,15 +110,15 @@ export default class TwitterService {
     });
   }
 
-  register(firstName, lastName, email, password) {
+  register(username, name, email, password) {
     const newUser = {
-      firstName: firstName,
-      lastName: lastName,
+      username: username,
+      name: name,
       email: email,
       password: password
     };
-    this.ac.post('/api/users', newUser).then(res => {
-      this.getUsers();
+    return this.ac.post('/api/users', newUser).then(res => {
+      return this.getUsers();
     });
   }
 

@@ -14,7 +14,7 @@ export class Signup {
   }
 
   register(e) {
-    this.twitterService.register(this.firstName, this.lastName, this.email, this.password);
+    this.twitterService.register(this.username, this.name, this.email, this.password);
     this.twitterService.login(this.email, this.password);
   }
 }

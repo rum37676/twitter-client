@@ -11,20 +11,19 @@ export class Usercard {
   }
 
   activate(data) {
-    //this.user = this.twitterService.users[data.$index];
     this.user = data;
     for (let follower of this.user.followers) {
       if (follower._id === this.twitterService.ownUser._id) {
         this.alreadyFollowing = true;
       }
     }
-    console.log(this.user);
-    console.log(this.alreadyFollowing);
+    //console.log(this.user);
+    //console.log(this.user._id);
   }
 
   follow() {
-    console.log('follow(' + this.user.username + ')');
-    this.twitterService.follow(this.user);
-    //this.alreadyFollowing;
+    //console.log('follow/unfollow(' + this.user.username + ', ' + this.alreadyFollowing + ')');
+    this.twitterService.follow(this.user, this.alreadyFollowing);
+    this.alreadyFollowing = !this.alreadyFollowing;
   }
 }

@@ -9,3 +9,6 @@ export class LoginStatus {
     this.status = status;
   }
 }
+
+export class TweetUpdate {
+}
