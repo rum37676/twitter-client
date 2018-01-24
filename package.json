@@ -7,7 +7,7 @@
     "url": "???"
   },
   "scripts": {
-    "start": "node index.html"
+    "start": "node src/app.js"
   },
   "license": "MIT",
   "dependencies": {
