@@ -12,3 +12,6 @@ export class LoginStatus {
 
 export class TweetUpdate {
 }
+
+export class UserUpdate {
+}

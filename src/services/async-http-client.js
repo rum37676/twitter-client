@@ -10,13 +10,12 @@ export default class AsyncHttpClient {
   constructor(httpClient, fixtures, ea) {
     this.http = httpClient;
     this.http.configure(http => {
-      http.withBaseUrl(fixtures.baseUrlOnline);
+      http.withBaseUrl(fixtures.baseUrlLocal);
     });
     this.ea = ea;
   }
 
   isAuthenticated() {
-    //console.log('isAuthenticated?');
     let authenticated = false;
     if (localStorage.sessionTokenTwitter !== 'null' && typeof localStorage.sessionTokenTwitter !== 'undefined') {
       authenticated = true;

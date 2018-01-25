@@ -1,0 +1,36 @@
+<template>
+  <h3 class='ui dividing header blue attached segment'> Profil</h3>
+
+  <div class="ui horizontal divider"></div>
+
+  <form submit.delegate="update($event)" class="ui stacked segment form">
+    <div class="two fields">
+      <div class="field">
+        <label>Username</label>
+        <input placeholder="Username" type="text" value.bind="username">
+      </div>
+      <div class="field">
+        <label>Name</label>
+        <input placeholder="Name" type="text" value.bind="name">
+      </div>
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input placeholder="Email" type="text" value.bind="email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" value.bind="password">
+    </div>
+    <button class="ui submit blue button">
+      <i class="save icon"></i>
+      Save Account Data
+    </button>
+    <button class="ui blue right floated button">
+      <i class="trash outline icon"></i>
+      Delete All Tweets
+    </button>
+  </form>
+
+
+</template>

@@ -15,7 +15,7 @@ export class UserTimeline {
     this.ownUser = ts.ownUser;
     this.ea = ea;
     this.ea.subscribe(TweetUpdate, msg => {
-      console.log('globalTimeline subscribed');
+      console.log('userTimeline subscribed');
       this.updateTweets();
     });
   }
@@ -37,9 +37,5 @@ export class UserTimeline {
         this.tweets.push(tweet);
       }
     }
-  }
-
-  attached() {
-    console.log('userTimeline attached');
   }
 }

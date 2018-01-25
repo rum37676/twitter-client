@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import Fixtures from './fixtures';
-import {LoginStatus, TweetUpdate} from './messages';
+import {LoginStatus, TweetUpdate, UserUpdate} from './messages';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import AsyncHttpClient from './async-http-client';
 import { CompositionTransaction } from 'aurelia-framework';
@@ -38,7 +38,7 @@ export default class TwitterService {
       this.users = res[1].content;
       this.ownUser = res[2].content;
 
-      this.ea.publish(new TweetUpdate(this.tweets));
+      this.ea.publish(new TweetUpdate());
       this.compositionTransactionNotifier.done();
     }).catch(error => {
       console.error(error);
@@ -53,46 +53,68 @@ export default class TwitterService {
     }
 
     this.ac.post('/api/tweets', formData).then(res => {
-      this.tweets.unshift(res.content);
-      this.ea.publish(new TweetUpdate());
+      /*this.tweets.unshift(res.content);
+      this.ea.publish(new TweetUpdate());*/
+      this.getTweets();
     });
   }
 
   deleteTweet(tweet) {
     console.log('twitterService: deleteTweet');
     this.ac.delete('/api/tweets/' + tweet._id).then(res => {
-      console.log('Innerhalb von callback');
-      const index = this.tweets.indexOf(tweet);
+      /*const index = this.tweets.indexOf(tweet);
       if (index > -1) {
         this.tweets.splice(index, 1);
-        console.log('Tweet deleted');
-        console.log(this.tweets);
       }
-      this.ea.publish(new TweetUpdate());
+      this.ea.publish(new TweetUpdate());*/
+      this.getTweets();
+    });
+  }
+
+  deleteAllTweetsForUser(user) {
+    console.log('twitterService: deleteAllTweetsForUser');
+    this.ac.delete('/api/users/' + user._id + '/tweets').then(res => {
+      this.getTweets();
     });
   }
 
   follow(user, bool) {
     if (bool) {
-      console.log('unfollow');
+      console.log('twitter-service: unfollow');
       this.ac.delete('/api/users/follow/' + user._id).then(res => {
-        for (let i = 0; i < this.users.length; i++) {
+        /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
             this.users[i] = res.content;
           }
-        }
+        }*/
+        this.getUsers();
       });
     }
     else {
-      console.log('follow');
+      console.log('twitter-service: follow');
       this.ac.post('/api/users/follow/' + user._id).then(res => {
-        for (let i = 0; i < this.users.length; i++) {
+        /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
             this.users[i] = res.content;
           }
-        }
+        }*/
+        this.getUsers();
       });
     }
+  }
+
+  updateProfil(username, name, email, password) {
+    let user = {
+      username: username,
+      name: name,
+      email: email,
+      password: password
+    };
+    this.ac.post('/api/users/me', user).then(res => {
+      this.getUsers();
+      this.getMe();
+      this.getTweets();
+    });
   }
 
   isAuthenticated() {
@@ -102,12 +124,24 @@ export default class TwitterService {
   getUsers() {
     this.ac.get('/api/users').then(res => {
       this.users = res.content;
+      console.log(this.users);
+      this.ea.publish(new UserUpdate());
+    });
+  }
+
+  getMe() {
+    this.ac.get('/api/users/me').then(res => {
+      this.ownUser = res.content;
+      console.log(this.ownUser);
+      this.ea.publish(new UserUpdate());
     });
   }
 
   getTweets() {
     this.ac.get('/api/tweets').then(res => {
-      this.users = res.content;
+      this.tweets = res.content;
+      console.log(this.tweets);
+      this.ea.publish(new TweetUpdate());
     });
   }
 
@@ -118,9 +152,7 @@ export default class TwitterService {
       email: email,
       password: password
     };
-    return this.ac.post('/api/users', newUser).then(res => {
-      return this.getUsers();
-    });
+    return this.ac.post('/api/users', newUser);
   }
 
   login(email, password) {
@@ -128,7 +160,7 @@ export default class TwitterService {
       email: email,
       password: password
     };
-    this.ac.authenticate('/api/users/authenticate', user);
+    return this.ac.authenticate('/api/users/authenticate', user);
   }
 
   logout() {

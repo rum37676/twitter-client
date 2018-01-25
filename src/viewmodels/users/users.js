@@ -14,10 +14,4 @@ export class Users {
       }
     }
   }
-
-  attached() {
-    this.twitterService.updateData();
-    console.log(this.twitterService.users);
-    console.log('users attached');
-  }
 }
