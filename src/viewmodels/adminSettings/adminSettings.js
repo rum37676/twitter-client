@@ -1,9 +1,11 @@
 import {inject} from 'aurelia-framework';
 import TwitterService from '../../services/twitter-service';
+import {UserUpdate} from '../../services/messages';
 
 @inject(TwitterService)
-export class Signup {
+export class AdminSettings {
 
+  adminView = true;
   username = '';
   name = '';
   email = '';
@@ -15,15 +17,25 @@ export class Signup {
     this.twitterService = ts;
   }
 
-  register(e) {
+  addUser() {
     return Promise.all([
       this.twitterService.register(this.username, this.name, this.email, this.password)
     ]).then(res => {
+      this.twitterService.getUsers();
       this.errorText = null;
-      this.twitterService.login(this.email, this.password);
     }).catch(error => {
       this.errorText = error.response;
       //console.error(error);
     });
   }
+
+  deleteUser(user) {
+    this.twitterService.deleteUser(user);
+  }
+
+  deleteTweetsForUser(user) {
+    this.twitterService.deleteTweetsForUser(user);
+  }
+
 }
+

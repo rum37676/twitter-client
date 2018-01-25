@@ -17,7 +17,6 @@ export class Profil {
     this.ea = ea;
     this.updateUser();
     this.ea.subscribe(UserUpdate, msg => {
-      console.log('profil subscribed');
       this.updateUser();
     });
   }

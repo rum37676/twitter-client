@@ -10,6 +10,7 @@ export class Home {
   }
 
   configureRouter(config, router) {
+
     config.map([
       { route: 'startScreen', name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
       { route: 'followerTimeline', name: 'followerTimeline', moduleId: 'viewmodels/followerTimeline/followerTimeline', nav: true, title: 'Follower Timeline' },
@@ -17,6 +18,7 @@ export class Home {
       { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users' },
       //{ route: 'dashboard', name: 'dashboard', moduleId: 'viewmodels/dashboard/dashboard', nav: true, title: 'Dashboard' },
       { route: 'profil', name: 'profil', moduleId: 'viewmodels/profil/profil', nav: true, title: 'Profil' },
+      { route: 'adminSettings', name: 'adminSettings', moduleId: 'viewmodels/adminSettings/adminSettings', nav: true, title: 'Admin Settings', role: 'admin' },
       { route: 'userTimeline/:id', name: 'userTimeline', moduleId: 'viewmodels/userTimeline/userTimeline', nav: false, title: 'userTimeline' },
       { route: 'logout', name: 'logout', moduleId: 'viewmodels/logout/logout', nav: true, title: 'Logout' }
     ]);
@@ -28,11 +30,8 @@ export class Home {
   }
 
   attached() {
-    //console.log('home attached isAthenticated');
     if (this.twitterService.isAuthenticated()) {
       this.twitterService.updateData();
     }
-    //console.log('home attached');
-    //console.log(this.twitterService.tweets);
   }
 }

@@ -8,7 +8,7 @@ export class App {
 
   constructor(ts, au, ea) {
     this.au = au;
-    this.ts = ts;
+    this.twitterService = ts;
     ea.subscribe(LoginStatus, msg => {
       this.router.navigate('/', { replace: true, trigger: false });
       this.router.reset();
@@ -20,19 +20,20 @@ export class App {
     });
   }
 
-  attached() {
-    if (this.ts.isAuthenticated()) {
-      this.au.setRoot('home').then(() => {
-        this.router.navigateToRoute('startScreen');
-      });
-    }
-  }
-
   configureRouter(config, router) {
     config.map([
       { route: ['', 'login'], name: 'login', moduleId: 'viewmodels/login/login', nav: true, title: 'Login' },
       { route: 'signup', name: 'signup', moduleId: 'viewmodels/signup/signup', nav: true, title: 'Signup' }
     ]);
     this.router = router;
+  }
+
+  attached() {
+    if (this.twitterService.isAuthenticated()) {
+      this.twitterService.getMe();
+      this.au.setRoot('home').then(() => {
+        this.router.navigateToRoute('startScreen');
+      });
+    }
   }
 }

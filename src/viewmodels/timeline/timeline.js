@@ -12,7 +12,7 @@ export class Timeline {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(TweetUpdate, msg => {
-      console.log('timeline subscribed');
+      //console.log('timeline subscribed');
       this.updateTweets();
     });
   }
@@ -23,18 +23,19 @@ export class Timeline {
   }
 
   allowDelete(tweet) {
-    if (tweet.tweeter._id === this.twitterService.ownUser._id) {
-      return true;
-    }
-    else {
-      return false;
+    if (this.twitterService.ownUser !== null && this.twitterService.ownUser !== undefined) {
+      if (tweet.tweeter._id === this.twitterService.ownUser._id || this.twitterService.ownUser.role === 'admin') {
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   }
 
   activate(data) {
     this.users = data;
-    console.log('timeline activate');
-    console.log(data);
+    //console.log('timeline activate');
     this.updateTweets();
   }
 
@@ -42,7 +43,7 @@ export class Timeline {
     this.tweets = [];
     for (let tweet of this.twitterService.tweets) {
       for (let user of this.users) {
-        if (tweet.tweeter._id === user._id) {
+        if (tweet.tweeter !== null && tweet.tweeter._id === user._id) {
           this.tweets.push(tweet);
         }
       }

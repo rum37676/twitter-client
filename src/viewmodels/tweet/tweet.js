@@ -13,7 +13,6 @@ export class Tweet {
   }
 
   createTweet() {
-    console.log(this.imageList[0]);
     this.twitterService.saveTweet(this.tweetText, this.imageList[0]);
     this.tweetText = '';
     this.selectedFiles = null;

@@ -1,8 +1,9 @@
 <template>
+  <!--<require from="../adminSettings/adminSettings"></require>-->
 
   <div class="ui piled segment">
 
-    <a class="header" route-href="route: userTimeline; params.bind: {id: userId}" style="font-size: 20px; font-weight: bold;">${user.name}</a>
+    <a class="header" route-href="route: userTimeline; params.bind: {id: userId}" style="font-size: 20px; font-weight: bold;">${user.username}</a>
     <div class="ui divider"></div>
     <div class="grouped inline fields">
       <div class="ui field" >
@@ -12,10 +13,19 @@
 
     <div class="ui divider"></div>
 
-    <form submit.trigger="follow()" class="ui form">
+    <form submit.trigger="follow()" class="ui form" hide.bind="adminView">
       <button class="ui blue submit button" hide.bind="alreadyFollowing">Follow</button>
       <button class="ui red submit button" show.bind="alreadyFollowing">Unfollow</button>
     </form>
+    <button class="ui button" show.bind="adminView" click.delegate="deleteUser(user)">
+      <i class="trash outline icon"></i>
+      Delete User
+    </button>
+
+    <button class="ui button" show.bind="adminView" click.delegate="deleteTweetsForUser(user)">
+      <i class="trash outline icon"></i>
+      Delete Tweets
+    </button>
 
   </div>
 </template>

@@ -20,7 +20,7 @@ export class Login {
   }
 
   login() {
-    console.log(`Trying to log in ${this.email}`);
+    // localStorage: save email and rememberMe
     if (this.rememberMe === true) {
       let loginOptions = {
         email: this.email,
@@ -31,6 +31,7 @@ export class Login {
     if (this.rememberMe === false) {
       localStorage.emailTwitter = null;
     }
+    console.log(`Trying to log in ${this.email}`);
     this.twitterService.login(this.email.trim(), this.password.trim());
   }
 }

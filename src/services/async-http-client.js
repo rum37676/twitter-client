@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import Fixtures from './fixtures';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {LoginStatus} from './messages';
+import {LoginStatus, OwnUserUpdate} from './messages';
 
 @inject(HttpClient, Fixtures, EventAggregator )
 export default class AsyncHttpClient {
@@ -37,8 +37,8 @@ export default class AsyncHttpClient {
           configuration.withHeader('Authorization', 'bearer ' + response.content.token);
         });
       }
-      //console.log('authentication successful');
-      //console.log(status);
+      console.log('authentication successful: logged in user: ' + user.email);
+      this.ea.publish(new OwnUserUpdate(status.user));
       this.ea.publish(new LoginStatus(status));
     }).catch(error => {
       const status = {
@@ -65,6 +65,7 @@ export default class AsyncHttpClient {
   }
 
   delete(url) {
+    console.log('http-client delete');
     return this.http.delete(url);
   }
 }

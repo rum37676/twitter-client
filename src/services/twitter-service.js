@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import Fixtures from './fixtures';
-import {LoginStatus, TweetUpdate, UserUpdate} from './messages';
+import {LoginStatus, OwnUserUpdate, TweetUpdate, UserUpdate} from './messages';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import AsyncHttpClient from './async-http-client';
 import { CompositionTransaction } from 'aurelia-framework';
@@ -19,8 +19,12 @@ export default class TwitterService {
     this.compositionTransaction = cT;
     this.compositionTransactionNotifier = null;
 
+    this.ea.subscribe(OwnUserUpdate, msg => {
+      this.ownUser = msg.user;
+    });
     this.ea.subscribe(LoginStatus, msg => {
       if (msg.status.success === true) {
+        console.log('twitterService subscribe');
         this.updateData();
       }
     });
@@ -80,6 +84,7 @@ export default class TwitterService {
 
   follow(user, bool) {
     if (bool) {
+      // unfollow
       this.ac.delete('/api/users/follow/' + user._id).then(res => {
         /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
@@ -87,11 +92,10 @@ export default class TwitterService {
           }
         }*/
         this.getUsers();
-        console.log('twitter-service follow');
-        console.log(this.users);
       });
     }
     else {
+      // follow
       this.ac.post('/api/users/follow/' + user._id).then(res => {
         /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
@@ -99,10 +103,26 @@ export default class TwitterService {
           }
         }*/
         this.getUsers();
-        console.log('twitter-service unfollow');
-        console.log(this.users);
       });
     }
+  }
+
+  deleteUser(user) {
+    this.ac.delete('/api/users/' + user._id).then(res => {
+      /*const index = this.tweets.indexOf(tweet);au run --w
+      if (index > -1) {
+        this.tweets.splice(index, 1);
+      }
+      this.ea.publish(new TweetUpdate());*/
+      this.getUsers();
+      this.getTweets();
+    });
+  }
+
+  deleteTweetsForUser(user) {
+    this.ac.delete('/api/users/' + user._id + '/tweets').then(res => {
+      this.getTweets();
+    });
   }
 
   updateProfil(username, name, email, password) {
@@ -126,6 +146,7 @@ export default class TwitterService {
   getUsers() {
     this.ac.get('/api/users').then(res => {
       this.users = res.content;
+      console.log('getUsers');
       console.log(this.users);
       this.ea.publish(new UserUpdate());
     });
@@ -134,6 +155,7 @@ export default class TwitterService {
   getMe() {
     this.ac.get('/api/users/me').then(res => {
       this.ownUser = res.content;
+      console.log('getMe');
       console.log(this.ownUser);
       this.ea.publish(new UserUpdate());
     });
@@ -142,6 +164,7 @@ export default class TwitterService {
   getTweets() {
     this.ac.get('/api/tweets').then(res => {
       this.tweets = res.content;
+      console.log('getTweets');
       console.log(this.tweets);
       this.ea.publish(new TweetUpdate());
     });
