@@ -5,7 +5,7 @@
 
   <div class="ui link five cards">
     <div class="card" repeat.for="user of otherUsers">
-      <compose view-model="../usercard/usercard" model.bind="user"></compose>
+      <compose view-model="../usercard/usercard" model.bind="user._id"></compose>
     </div>
   </div>
 </template>

@@ -1,29 +1,29 @@
 import {inject} from 'aurelia-framework';
 import TwitterService from '../../services/twitter-service';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {TweetUpdate} from '../../services/messages';
+import {UserUpdate} from '../../services/messages';
 
 @inject(TwitterService, EventAggregator)
 export class GlobalTimeline {
 
-  tweets = [];
+  users = [];
 
   constructor(ts, ea) {
     this.twitterService = ts;
     this.ea = ea;
-    this.updateTweets();
-    this.ea.subscribe(TweetUpdate, msg => {
-      console.log('globalTimeline subscribed');
-      this.updateTweets();
+    this.updateUsers();
+    this.ea.subscribe(UserUpdate, msg => {
+      //console.log('globalTimeline subscribed');
+      this.updateUsers();
     });
   }
 
-  updateTweets() {
-    this.tweets = this.twitterService.tweets;
+  updateUsers() {
+    this.users = this.twitterService.users;
   }
 
-  attached() {
+  /*attached() {
     this.tweets = this.twitterService.tweets;
     console.log('globalTimeline attached');
-  }
+  }*/
 }

@@ -6,6 +6,7 @@ import {UserUpdate} from '../../services/messages';
 @inject(TwitterService, EventAggregator)
 export class Profil {
 
+  ownUser = null;
   username = '';
   name = '';
   email = '';
@@ -14,7 +15,6 @@ export class Profil {
   constructor(ts, ea) {
     this.twitterService = ts;
     this.ea = ea;
-    //this.twitterService.viewSettings();
     this.updateUser();
     this.ea.subscribe(UserUpdate, msg => {
       console.log('profil subscribed');
@@ -23,17 +23,18 @@ export class Profil {
   }
 
   updateUser() {
-    this.username = this.twitterService.ownUser.username;
-    this.name = this.twitterService.ownUser.name;
-    this.email = this.twitterService.ownUser.email;
-    this.password = this.twitterService.ownUser.password;
+    this.ownUser = this.twitterService.ownUser;
+    this.username = this.ownUser.username;
+    this.name = this.ownUser.name;
+    this.email = this.ownUser.email;
+    this.password = this.ownUser.password;
   }
 
-  update(e) {
+  update() {
     this.twitterService.updateProfil(this.username, this.name, this.email, this.password);
   }
 
-  deleteAllTweets(e) {
-    this.twitterService.deleteAllTweetsForUser(this.twitterService.ownUser);
+  deleteAllTweets() {
+    this.twitterService.deleteAllTweetsForUser(this.ownUser);
   }
 }

@@ -5,25 +5,30 @@ import {UserUpdate} from '../../services/messages';
 
 @inject(TwitterService, EventAggregator)
 export class Usercard {
+  userId = undefined;
   user = null;
-  alreadyFollowing = false;
+  alreadyFollowing = undefined;
 
   constructor(ts, ea) {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(UserUpdate, msg => {
-      console.log('usercard subscribed');
+      console.log('usercard subscribed: UserUpdate');
       this.updateUsers();
     });
   }
 
   activate(data) {
-    this.user = data;
+    this.userId = data;
     this.updateUsers();
-    console.log('usercard activate');
   }
 
   updateUsers() {
+    for (let user of this.twitterService.users) {
+      if (user._id === this.userId) {
+        this.user = user;
+      }
+    }
     for (let follower of this.user.followers) {
       if (follower._id === this.twitterService.ownUser._id) {
         this.alreadyFollowing = true;
@@ -34,5 +39,14 @@ export class Usercard {
   follow() {
     this.twitterService.follow(this.user, this.alreadyFollowing);
     this.alreadyFollowing = !this.alreadyFollowing;
+  }
+
+  hasProfilImage() {
+    if (this.user.profilImage !== undefined) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

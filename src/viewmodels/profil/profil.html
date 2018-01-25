@@ -26,11 +26,19 @@
       <i class="save icon"></i>
       Save Account Data
     </button>
-    <button class="ui blue right floated button">
-      <i class="trash outline icon"></i>
-      Delete All Tweets
-    </button>
   </form>
 
+  <button class="ui blue right floated button " click.delegate="deleteAllTweets()">
+    <i class="trash outline icon"></i>
+    Delete All Tweets
+  </button>
+
+  <div class="ui horizontal divider"></div>
+
+  <div class="ui horizontal divider"></div>
+
+  <div class="ui horizontal divider"></div>
+
+  <compose view-model="../userTimeline/userTimeline" model.bind="{id: ownUser._id}"></compose>
 
 </template>

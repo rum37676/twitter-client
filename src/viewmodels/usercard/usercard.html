@@ -2,11 +2,11 @@
 
   <div class="ui piled segment">
 
-    <a class="header" route-href="route: userTimeline; params.bind: {id: user._id}" style="font-size: 20px; font-weight: bold;">${user.name}</a>
+    <a class="header" route-href="route: userTimeline; params.bind: {id: userId}" style="font-size: 20px; font-weight: bold;">${user.name}</a>
     <div class="ui divider"></div>
     <div class="grouped inline fields">
       <div class="ui field" >
-        <img src="src/images/homer4.jpeg" height="150" width="150"><img>
+        <img src="src/images/homer4.jpeg" height="150" width="150" hide.bind="hasProfilImage()"><img>
       </div>
     </div>
 

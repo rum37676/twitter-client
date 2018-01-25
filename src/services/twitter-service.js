@@ -39,6 +39,7 @@ export default class TwitterService {
       this.ownUser = res[2].content;
 
       this.ea.publish(new TweetUpdate());
+      this.ea.publish(new UserUpdate());
       this.compositionTransactionNotifier.done();
     }).catch(error => {
       console.error(error);
@@ -80,7 +81,6 @@ export default class TwitterService {
 
   follow(user, bool) {
     if (bool) {
-      console.log('twitter-service: unfollow');
       this.ac.delete('/api/users/follow/' + user._id).then(res => {
         /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
@@ -88,10 +88,11 @@ export default class TwitterService {
           }
         }*/
         this.getUsers();
+        console.log('twitter-service follow');
+        console.log(this.users);
       });
     }
     else {
-      console.log('twitter-service: follow');
       this.ac.post('/api/users/follow/' + user._id).then(res => {
         /*for (let i = 0; i < this.users.length; i++) {
           if (this.users[i]._id === res.content._id) {
@@ -99,6 +100,8 @@ export default class TwitterService {
           }
         }*/
         this.getUsers();
+        console.log('twitter-service unfollow');
+        console.log(this.users);
       });
     }
   }
