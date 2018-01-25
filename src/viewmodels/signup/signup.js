@@ -8,13 +8,22 @@ export class Signup {
   name = 'Margarete Simspon';
   email = 'marge@simpson.com';
   password = 'secret';
+  error = false;
+  errorText = null;
 
   constructor(ts) {
     this.twitterService = ts;
   }
 
   register(e) {
-    this.twitterService.register(this.username, this.name, this.email, this.password);
-    this.twitterService.login(this.email, this.password);
+    return Promise.all([
+      this.twitterService.register(this.username, this.name, this.email, this.password)
+    ]).then(res => {
+      this.errorText = null;
+      this.twitterService.login(this.email, this.password);
+    }).catch(error => {
+      this.errorText = error.response;
+      //console.error(error);
+    });
   }
 }
