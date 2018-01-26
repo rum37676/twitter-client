@@ -10,7 +10,7 @@ export default class AsyncHttpClient {
   constructor(httpClient, fixtures, ea) {
     this.http = httpClient;
     this.http.configure(http => {
-      http.withBaseUrl(fixtures.baseUrlLocal);
+      http.withBaseUrl(fixtures.baseUrlOnline);
     });
     this.ea = ea;
   }
@@ -36,9 +36,11 @@ export default class AsyncHttpClient {
         this.http.configure(configuration => {
           configuration.withHeader('Authorization', 'bearer ' + response.content.token);
         });
+        console.log('authentication successful: logged in user: ' + user.email);
+        this.ea.publish(new OwnUserUpdate(status.user));
+      } else {
+        console.log('authentication failed: could not log in user: ' + user.email);
       }
-      console.log('authentication successful: logged in user: ' + user.email);
-      this.ea.publish(new OwnUserUpdate(status.user));
       this.ea.publish(new LoginStatus(status));
     }).catch(error => {
       const status = {

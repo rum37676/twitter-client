@@ -3,30 +3,44 @@
 
   <div class="ui horizontal divider"></div>
 
-  <form submit.delegate="update($event)" class="ui stacked segment form">
-    <div class="two fields">
-      <div class="field">
-        <label>Username</label>
-        <input placeholder="Username" type="text" value.bind="username">
+  <div class="ui grid">
+    <div class="four wide column">
+      <img src="${ownUser.image_src}" width="280" height="200"/>
+      <div class="grouped inline fields">
+        <h4>Please select your profil picture
+          <input type="file" accept="image/*" name="image" id="image" files.bind="profilImage">
+        </h4>
+        <button class="ui submit blue button" click.delegate="uploadProfilImage()">Upload Image</button>
       </div>
-      <div class="field">
-        <label>Name</label>
-        <input placeholder="Name" type="text" value.bind="name">
-      </div>
+
     </div>
-    <div class="field">
-      <label>Email</label>
-      <input placeholder="Email" type="text" value.bind="email">
+    <div class="twelve wide column">
+      <form submit.delegate="update($event)" class="ui stacked segment form">
+        <div class="two fields">
+          <div class="field">
+            <label>Username</label>
+            <input placeholder="Username" type="text" value.bind="username" required>
+          </div>
+          <div class="field">
+            <label>Name</label>
+            <input placeholder="Name" type="text" value.bind="name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input placeholder="Email" type="text" value.bind="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required title="<placeholder>@<placeholder>.<de,com,...>">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" value.bind="password" pattern=".{6,}" required title="6 characters minimum">
+        </div>
+        <button class="ui submit blue button">
+          <i class="save icon"></i>
+          Save Account Data
+        </button>
+      </form>
     </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" value.bind="password">
-    </div>
-    <button class="ui submit blue button">
-      <i class="save icon"></i>
-      Save Account Data
-    </button>
-  </form>
+  </div>
 
   <button class="ui blue right floated button " click.delegate="deleteAllTweets()">
     <i class="trash outline icon"></i>

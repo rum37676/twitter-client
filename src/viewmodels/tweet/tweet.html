@@ -6,6 +6,16 @@
     <div class="three wide column"></div>
     <div class="ten wide column">
 
+      <div class="ui icon message" show.bind="error">
+        <i class="warning  icon"></i>
+        <div class="content">
+          <div class="header">
+            Empty Tweets are not allowed!
+          </div>
+          <p>Please enter a tweet text or a image!</p>
+        </div>
+      </div>
+
       <form submit.delegate="createTweet()" class="ui form stacked segment">
 
         <div class="grouped inline fields">
@@ -14,8 +24,6 @@
         </div>
 
         <div class="grouped inline fields">
-          <!--<input type="file" accept="image/*" name="tweetImage" id="tweetImage" files.bind="tweetImage" change.delegate="addPicturesToArray($event)">-->
-
           <label>Image</label>
           <input type="file" accept="image/*" name="image" id="image" files.bind="selectedFiles" change.delegate="addPicturesToArray($event)">
 

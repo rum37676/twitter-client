@@ -93,8 +93,7 @@ export default class TwitterService {
         }*/
         this.getUsers();
       });
-    }
-    else {
+    } else {
       // follow
       this.ac.post('/api/users/follow/' + user._id).then(res => {
         /*for (let i = 0; i < this.users.length; i++) {
@@ -135,8 +134,20 @@ export default class TwitterService {
     this.ac.post('/api/users/me', user).then(res => {
       this.getUsers();
       this.getMe();
-      this.getTweets();
     });
+  }
+
+  // TODO upload Picture und git commit dazu
+  uploadProfilImage(profilIimage) {
+    if (profilIimage !== null || profilIimage !== undefined) {
+      let formData = new FormData();
+      formData.append('info', 'This is a profilImage.');
+      formData.append('profilImage', profilIimage);
+
+      this.ac.post('/api/users/image', formData).then(res => {
+        this.getMe();
+      });
+    }
   }
 
   isAuthenticated() {
@@ -144,7 +155,7 @@ export default class TwitterService {
   }
 
   getUsers() {
-    this.ac.get('/api/users').then(res => {
+    return this.ac.get('/api/users').then(res => {
       this.users = res.content;
       console.log('getUsers');
       console.log(this.users);
@@ -153,7 +164,7 @@ export default class TwitterService {
   }
 
   getMe() {
-    this.ac.get('/api/users/me').then(res => {
+    return this.ac.get('/api/users/me').then(res => {
       this.ownUser = res.content;
       console.log('getMe');
       console.log(this.ownUser);
@@ -162,7 +173,7 @@ export default class TwitterService {
   }
 
   getTweets() {
-    this.ac.get('/api/tweets').then(res => {
+    return this.ac.get('/api/tweets').then(res => {
       this.tweets = res.content;
       console.log('getTweets');
       console.log(this.tweets);

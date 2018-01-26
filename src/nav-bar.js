@@ -22,6 +22,7 @@ export class NavBar {
     }
     else {
       // ownUser not updated yet
+      console.log('ownUser data not initialized');
       return false;
     }
   }

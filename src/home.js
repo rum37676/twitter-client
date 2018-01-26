@@ -30,6 +30,7 @@ export class Home {
   }
 
   attached() {
+    console.log('home attached');
     if (this.twitterService.isAuthenticated()) {
       this.twitterService.updateData();
     }

@@ -7,6 +7,7 @@ import {UserUpdate} from '../../services/messages';
 export class Profil {
 
   ownUser = null;
+  profilImage = null;
   username = '';
   name = '';
   email = '';
@@ -35,5 +36,9 @@ export class Profil {
 
   deleteAllTweets() {
     this.twitterService.deleteAllTweetsForUser(this.ownUser);
+  }
+
+  uploadProfilImage() {
+    this.twitterService.uploadProfilImage(this.profilImage[0]);
   }
 }

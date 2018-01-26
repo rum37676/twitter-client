@@ -7,16 +7,21 @@ export class Tweet {
   tweetText = '';
   imageList = [];
   selectedFiles = null;
+  error = false;
 
   constructor(ts) {
     this.twitterService = ts;
   }
 
   createTweet() {
-    this.twitterService.saveTweet(this.tweetText, this.imageList[0]);
-    this.tweetText = '';
-    this.selectedFiles = null;
-    this.imageList = [];
+    if (this.tweetText === '' && this.imageList.length === 0) {
+      this.error = true;
+    } else {
+      this.twitterService.saveTweet(this.tweetText, this.imageList[0]);
+      this.tweetText = '';
+      this.selectedFiles = null;
+      this.imageList = [];
+    }
   }
 
   addPicturesToArray() {

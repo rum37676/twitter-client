@@ -29,10 +29,16 @@ export class App {
   }
 
   attached() {
+    console.log('app attached');
     if (this.twitterService.isAuthenticated()) {
-      this.twitterService.getMe();
-      this.au.setRoot('home').then(() => {
-        this.router.navigateToRoute('startScreen');
+      Promise.all([
+        this.twitterService.getMe()
+      ]).then(res => {
+        this.au.setRoot('home').then(() => {
+          this.router.navigateToRoute('startScreen');
+        });
+      }).catch(error => {
+        console.error(error);
       });
     }
   }
