@@ -13,7 +13,6 @@ export class Users {
     this.ea = ea;
     this.updateUsers();
     this.ea.subscribe(UserUpdate, msg => {
-      console.log('users subscribed');
       this.updateUsers();
     });
   }

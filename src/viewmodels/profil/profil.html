@@ -14,8 +14,8 @@
       </div>
 
     </div>
-    <div class="ten wide column" hide.bind="ownUser.username === 'root'">
-      <form submit.delegate="update($event)" class="ui stacked segment form">
+    <div class="ten wide column">
+      <form submit.delegate="update($event)" class="ui stacked segment form" hide.bind="ownUser.username === 'root'">
         <div class="two fields">
           <div class="field">
             <label>Username</label>

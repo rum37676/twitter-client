@@ -13,7 +13,6 @@ export class UserTimeline {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(UserUpdate, msg => {
-      console.log('userTimeline subscribed: UserUpdate');
       this.updateUsers();
     });
   }

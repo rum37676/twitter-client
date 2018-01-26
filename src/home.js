@@ -12,6 +12,7 @@ export class Home {
   configureRouter(config, router) {
 
     config.map([
+      { route: 'socialGraph', name: 'socialGraph', moduleId: 'viewmodels/socialGraph/socialGraph', nav: true, title: 'Network'},
       { route: 'followerTimeline', name: 'followerTimeline', moduleId: 'viewmodels/followerTimeline/followerTimeline', nav: true, title: 'Follower Timeline' },
       { route: ['', 'home'], name: 'globalTimeline', moduleId: 'viewmodels/globalTimeline/globalTimeline', nav: true, title: 'Global Timeline' },
       { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users'},

@@ -19,8 +19,7 @@ export class NavBar {
       if (typeof this.twitterService.ownUser.role !== "undefined") {
         return navItem.config.role === this.twitterService.ownUser.role.toLowerCase();
       }
-    }
-    else {
+    } else {
       // ownUser not updated yet
       console.log('ownUser data not initialized');
       return false;

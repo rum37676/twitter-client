@@ -75,6 +75,11 @@
             "main": "aurelia-templating-router"
           },
           {
+            "name": "d3",
+            "path": "../node_modules/d3/build",
+            "main": "d3"
+          },
+          {
             "name": "aurelia-testing",
             "path": "../node_modules/aurelia-testing/dist/amd",
             "main": "aurelia-testing",
