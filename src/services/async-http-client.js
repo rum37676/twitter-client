@@ -10,7 +10,7 @@ export default class AsyncHttpClient {
   constructor(httpClient, fixtures, ea) {
     this.http = httpClient;
     this.http.configure(http => {
-      http.withBaseUrl(fixtures.baseUrlOnline);
+      http.withBaseUrl(fixtures.baseUrlLocal);
     });
     this.ea = ea;
   }
@@ -28,7 +28,6 @@ export default class AsyncHttpClient {
   }
 
   authenticate(url, user) {
-    //console.log('authentication');
     this.http.post(url, user).then(response => {
       const status = response.content;
       if (status.success) {

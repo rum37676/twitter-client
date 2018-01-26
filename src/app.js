@@ -29,13 +29,12 @@ export class App {
   }
 
   attached() {
-    console.log('app attached');
     if (this.twitterService.isAuthenticated()) {
       Promise.all([
-        this.twitterService.getMe()
+        this.twitterService.updateData()
       ]).then(res => {
         this.au.setRoot('home').then(() => {
-          this.router.navigateToRoute('startScreen');
+          this.router.navigateToRoute('profil');
         });
       }).catch(error => {
         console.error(error);

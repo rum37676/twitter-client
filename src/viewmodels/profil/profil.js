@@ -39,6 +39,30 @@ export class Profil {
   }
 
   uploadProfilImage() {
-    this.twitterService.uploadProfilImage(this.profilImage[0]);
+    if (this.profilImage !== null) {
+      this.twitterService.uploadProfilImage(this.profilImage[0]);
+    }
+  }
+
+  getNumberOfFollowedUsers() {
+    let number = 0;
+    for (let user of this.twitterService.users) {
+      for (let follower of user.followers) {
+        if (follower._id === this.ownUser._id) {
+          number++;
+        }
+      }
+    }
+    return number;
+  }
+
+  getNumberOfTweets() {
+    let number = 0;
+    for (let tweet of this.twitterService.tweets) {
+      if (tweet.tweeter._id === this.ownUser._id) {
+        number++;
+      }
+    }
+    return number;
   }
 }

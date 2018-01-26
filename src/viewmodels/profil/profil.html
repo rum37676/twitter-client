@@ -14,7 +14,7 @@
       </div>
 
     </div>
-    <div class="twelve wide column">
+    <div class="ten wide column" hide.bind="ownUser.username === 'root'">
       <form submit.delegate="update($event)" class="ui stacked segment form">
         <div class="two fields">
           <div class="field">
@@ -40,6 +40,38 @@
         </button>
       </form>
     </div>
+
+    <div class="two wide column">
+      <div class="ui medium blue statistics">
+        <div class="statistic">
+          <div class="value">
+            <i class="user icon"></i>
+            ${getNumberOfFollowedUsers()}
+          </div>
+          <div class="label">
+            Following
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <i class="user icon"></i>
+            ${ownUser.followers.length}
+          </div>
+          <div class="label">
+            Followers
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <i class="comments icon"></i>
+            ${getNumberOfTweets()}
+          </div>
+          <div class="label">
+            Tweets
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <button class="ui blue right floated button " click.delegate="deleteAllTweets()">
@@ -48,9 +80,7 @@
   </button>
 
   <div class="ui horizontal divider"></div>
-
   <div class="ui horizontal divider"></div>
-
   <div class="ui horizontal divider"></div>
 
   <compose view-model="../userTimeline/userTimeline" model.bind="{id: ownUser._id}"></compose>

@@ -12,13 +12,11 @@ export class Home {
   configureRouter(config, router) {
 
     config.map([
-      { route: 'startScreen', name: 'startScreen', moduleId: 'viewmodels/startScreen/startScreen', nav: true, title: 'Start Screen' },
       { route: 'followerTimeline', name: 'followerTimeline', moduleId: 'viewmodels/followerTimeline/followerTimeline', nav: true, title: 'Follower Timeline' },
       { route: ['', 'home'], name: 'globalTimeline', moduleId: 'viewmodels/globalTimeline/globalTimeline', nav: true, title: 'Global Timeline' },
-      { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users' },
-      //{ route: 'dashboard', name: 'dashboard', moduleId: 'viewmodels/dashboard/dashboard', nav: true, title: 'Dashboard' },
+      { route: 'users', name: 'users', moduleId: 'viewmodels/users/users', nav: true, title: 'Users'},
       { route: 'profil', name: 'profil', moduleId: 'viewmodels/profil/profil', nav: true, title: 'Profil' },
-      { route: 'adminSettings', name: 'adminSettings', moduleId: 'viewmodels/adminSettings/adminSettings', nav: true, title: 'Admin Settings', role: 'admin' },
+      { route: 'admin', name: 'admin', moduleId: 'viewmodels/admin/admin', nav: true, title: 'Admin', role: 'admin' },
       { route: 'userTimeline/:id', name: 'userTimeline', moduleId: 'viewmodels/userTimeline/userTimeline', nav: false, title: 'userTimeline' },
       { route: 'logout', name: 'logout', moduleId: 'viewmodels/logout/logout', nav: true, title: 'Logout' }
     ]);
@@ -30,7 +28,6 @@ export class Home {
   }
 
   attached() {
-    console.log('home attached');
     if (this.twitterService.isAuthenticated()) {
       this.twitterService.updateData();
     }

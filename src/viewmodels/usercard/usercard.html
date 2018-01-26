@@ -1,15 +1,19 @@
 <template>
-  <!--<require from="../adminSettings/adminSettings"></require>-->
+  <!--<require from="../admin/admin"></require>-->
 
   <div class="ui piled segment">
 
-    <a class="header" route-href="route: userTimeline; params.bind: {id: userId}" style="font-size: 20px; font-weight: bold;">${user.username}</a>
-    <div class="ui divider"></div>
-    <div class="grouped inline fields">
-      <div class="ui field" >
-        <img src="${user.image_src}" height="140" width="180" hide.bind="hasProfilImage()"><img>
+    <a route-href="route: userTimeline; params.bind: {id: userId}">
+    <span style="display: block;">
+      <div class="header" style="font-size: 20px; font-weight: bold;">${user.username}</div>
+      <div class="ui divider"></div>
+      <div class="grouped inline fields">
+        <div class="image" >
+          <img src="${user.image_src}" height="140" width="180" hide.bind="hasProfilImage()"><img>
+        </div>
       </div>
-    </div>
+    </span>
+    </a>
 
     <div class="ui divider"></div>
 
@@ -17,7 +21,7 @@
       <button class="ui blue submit button" hide.bind="alreadyFollowing">Follow</button>
       <button class="ui red submit button" show.bind="alreadyFollowing">Unfollow</button>
     </form>
-    <button class="ui button" show.bind="adminView" click.delegate="deleteUser(user)">
+    <button class="ui button" show.bind="adminView && !(user.username === 'root')" click.delegate="deleteUser(user)">
       <i class="trash outline icon"></i>
       Delete User
     </button>

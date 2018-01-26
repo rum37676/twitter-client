@@ -16,8 +16,8 @@ export default class TwitterService {
   constructor(data, ea, ac, cT) {
     this.ea = ea;
     this.ac = ac;
-    this.compositionTransaction = cT;
-    this.compositionTransactionNotifier = null;
+    //this.compositionTransaction = cT;
+    //this.compositionTransactionNotifier = null;
 
     this.ea.subscribe(OwnUserUpdate, msg => {
       this.ownUser = msg.user;
@@ -31,7 +31,7 @@ export default class TwitterService {
   }
 
   updateData() {
-    this.compositionTransactionNotifier = this.compositionTransaction.enlist();
+    //this.compositionTransactionNotifier = this.compositionTransaction.enlist();
     return Promise.all([
       this.ac.get('/api/tweets'),
       this.ac.get('/api/users'),
@@ -43,7 +43,7 @@ export default class TwitterService {
 
       this.ea.publish(new TweetUpdate());
       this.ea.publish(new UserUpdate());
-      this.compositionTransactionNotifier.done();
+      //this.compositionTransactionNotifier.done();
     }).catch(error => {
       console.error(error);
     });
@@ -118,6 +118,17 @@ export default class TwitterService {
     });
   }
 
+  deleteAllUsers() {
+    this.ac.delete('/api/users').then(res => {
+      /*const index = this.tweets.indexOf(tweet);au run --w
+      if (index > -1) {
+        this.tweets.splice(index, 1);
+      }
+      this.ea.publish(new TweetUpdate());*/
+      this.logout();
+    });
+  }
+
   deleteTweetsForUser(user) {
     this.ac.delete('/api/users/' + user._id + '/tweets').then(res => {
       this.getTweets();
@@ -137,7 +148,6 @@ export default class TwitterService {
     });
   }
 
-  // TODO upload Picture und git commit dazu
   uploadProfilImage(profilIimage) {
     if (profilIimage !== null || profilIimage !== undefined) {
       let formData = new FormData();

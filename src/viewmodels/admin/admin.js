@@ -3,7 +3,7 @@ import TwitterService from '../../services/twitter-service';
 import {UserUpdate} from '../../services/messages';
 
 @inject(TwitterService)
-export class AdminSettings {
+export class Admin {
 
   adminView = true;
   username = '';
@@ -37,5 +37,8 @@ export class AdminSettings {
     this.twitterService.deleteTweetsForUser(user);
   }
 
+  deleteAllUsers() {
+    this.twitterService.deleteAllUsers();
+  }
 }
 
