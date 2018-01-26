@@ -8,6 +8,7 @@ export class Profil {
 
   ownUser = null;
   profilImage = null;
+  uploading = false;
   username = '';
   name = '';
   email = '';
@@ -28,6 +29,8 @@ export class Profil {
     this.name = this.ownUser.name;
     this.email = this.ownUser.email;
     this.password = this.ownUser.password;
+    this.profilImage = null;
+    this.uploading = false;
   }
 
   update() {
@@ -39,8 +42,10 @@ export class Profil {
   }
 
   uploadProfilImage() {
-    if (this.profilImage !== null) {
+    if (this.profilImage !== null && this.profilImage.length > 0) {
+      this.uploading = true;
       this.twitterService.uploadProfilImage(this.profilImage[0]);
+      this.profilImage = null;
     }
   }
 

@@ -27,6 +27,9 @@
           <label>Image</label>
           <input type="file" accept="image/*" name="image" id="image" files.bind="selectedFiles" change.delegate="addPicturesToArray($event)">
 
+        </div>
+
+        <div class="grouped inline fields">
           <table>
             <tr>
               <th repeat.for="file of imageList">
@@ -35,7 +38,8 @@
             </tr>
           </table>
         </div>
-        <button class="ui blue submit button">Twittern</button>
+        <button class="ui blue submit button" hide.bind="uploading">Twittern</button>
+        <button class="ui blue disabled loading button" show.bind="uploading">Twittern</button>
 
       </form>
 

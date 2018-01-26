@@ -12,7 +12,16 @@
       <label>Remember me</label> <input type="checkbox" checked.bind="rememberMe"/>
     </div>
     <button class="ui blue submit button">Login</button>
-    <h3>${prompt}</h3>
   </form>
+
+  <div class="ui icon message" show.bind="error">
+    <i class="warning  icon"></i>
+    <div class="content">
+      <div class="header">
+        Could not log in ${email}!
+      </div>
+      <p>Please check email and password!</p>
+    </div>
+  </div>
 
 </template>

@@ -9,13 +9,16 @@ export class App {
   constructor(ts, au, ea) {
     this.au = au;
     this.twitterService = ts;
-    ea.subscribe(LoginStatus, msg => {
-      this.router.navigate('/', { replace: true, trigger: false });
-      this.router.reset();
-      if (msg.status.success === true) {
-        au.setRoot('home');
-      } else {
-        au.setRoot('app');
+    this.ea = ea;
+    this.ea.subscribe(LoginStatus, msg => {
+      if (msg.status.changed === true) {
+        this.router.navigate('/', { replace: true, trigger: false });
+        this.router.reset();
+        if (msg.status.success === true) {
+          au.setRoot('home');
+        } else {
+          au.setRoot('app');
+        }
       }
     });
   }
@@ -34,7 +37,7 @@ export class App {
         this.twitterService.updateData()
       ]).then(res => {
         this.au.setRoot('home').then(() => {
-          this.router.navigateToRoute('profil');
+          this.router.navigateToRoute('globalTimeline');
         });
       }).catch(error => {
         console.error(error);

@@ -1,4 +1,5 @@
 <template>
+
   <h3 class='ui dividing header blue attached segment'> Profil</h3>
 
   <div class="ui horizontal divider"></div>
@@ -10,7 +11,8 @@
         <h4>Please select your profil picture
           <input type="file" accept="image/*" name="image" id="image" files.bind="profilImage">
         </h4>
-        <button class="ui submit blue button" click.delegate="uploadProfilImage()">Upload Image</button>
+        <button class="ui submit right floated blue button" click.delegate="uploadProfilImage()" hide.bind="uploading">Upload Image</button>
+        <button class="ui submit disabled right floated blue loading button" show.bind="uploading">Upload Image</button>
       </div>
 
     </div>

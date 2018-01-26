@@ -12,13 +12,11 @@ export class Timeline {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(TweetUpdate, msg => {
-      //console.log('timeline subscribed');
       this.updateTweets();
     });
   }
 
   deleteTweet(tweet) {
-    console.log('timeline: delete Tweet');
     this.twitterService.deleteTweet(tweet);
   }
 
@@ -35,7 +33,6 @@ export class Timeline {
 
   activate(data) {
     this.users = data;
-    //console.log('timeline activate');
     this.updateTweets();
   }
 

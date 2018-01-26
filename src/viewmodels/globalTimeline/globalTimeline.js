@@ -13,7 +13,6 @@ export class GlobalTimeline {
     this.ea = ea;
     this.updateUsers();
     this.ea.subscribe(UserUpdate, msg => {
-      //console.log('globalTimeline subscribed');
       this.updateUsers();
     });
   }
@@ -21,9 +20,4 @@ export class GlobalTimeline {
   updateUsers() {
     this.users = this.twitterService.users;
   }
-
-  /*attached() {
-    this.tweets = this.twitterService.tweets;
-    console.log('globalTimeline attached');
-  }*/
 }

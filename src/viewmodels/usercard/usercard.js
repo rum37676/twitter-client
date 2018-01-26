@@ -13,7 +13,6 @@ export class Usercard {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(UserUpdate, msg => {
-      console.log('usercard subscribed: UserUpdate');
       this.updateUsers();
     });
   }

@@ -14,7 +14,6 @@ export class FollowerTimeline {
     this.ea = ea;
     this.updateUsers();
     this.ea.subscribe(UserUpdate, msg => {
-      //console.log('followerTimeline subscribed');
       this.updateUsers();
     });
   }
@@ -30,9 +29,4 @@ export class FollowerTimeline {
       }
     }
   }
-
-  /*attached() {
-    console.log('followerTimeline attached');
-    console.log(this.tweets);
-  }*/
 }

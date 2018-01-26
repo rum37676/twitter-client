@@ -18,18 +18,31 @@ export default class AsyncHttpClient {
   isAuthenticated() {
     let authenticated = false;
     if (localStorage.sessionTokenTwitter !== 'null' && typeof localStorage.sessionTokenTwitter !== 'undefined') {
-      authenticated = true;
       this.http.configure(http => {
         const auth = JSON.parse(localStorage.sessionTokenTwitter);
         http.withHeader('Authorization', 'bearer ' + auth.token);
       });
+      // Check if authentication token is valid
+      return Promise.all([
+        this.http.get('api/users/validate')
+      ]).then(res => {
+        // token is valid
+        authenticated = true;
+        return true;
+      }).catch(error => {
+        // token is not valid
+        //console.error(error);
+        this.clearAuthentication();
+        return false;
+      });
+    } else {
+      return false;
     }
-    return authenticated;
   }
 
   authenticate(url, user) {
-    this.http.post(url, user).then(response => {
-      const status = response.content;
+    return this.http.post(url, user).then(response => {
+      let status = response.content;
       if (status.success) {
         localStorage.sessionTokenTwitter = JSON.stringify(response.content);
         this.http.configure(configuration => {
@@ -37,6 +50,7 @@ export default class AsyncHttpClient {
         });
         console.log('authentication successful: logged in user: ' + user.email);
         this.ea.publish(new OwnUserUpdate(status.user));
+        status.changed = true;
       } else {
         console.log('authentication failed: could not log in user: ' + user.email);
       }
@@ -66,7 +80,6 @@ export default class AsyncHttpClient {
   }
 
   delete(url) {
-    console.log('http-client delete');
     return this.http.delete(url);
   }
 }

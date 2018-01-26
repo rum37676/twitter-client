@@ -17,7 +17,7 @@ export class Signup {
 
   register(e) {
     return Promise.all([
-      this.twitterService.register(this.username, this.name, this.email, this.password)
+      this.twitterService.register(this.username.trim(), this.name.trim(), this.email.trim(), this.password.trim())
     ]).then(res => {
       this.errorText = null;
       this.twitterService.login(this.email, this.password);
