@@ -21,8 +21,8 @@ The first component is the web application itself (a simple web app & REST Backe
 
 | Project       | Description                         | Link to Repository      | Video Tour          | Deployed App        |         
 |----------------------|------------------------------|-------------------------|---------------------|---------------------|
-| **twitter-web**      | web app, based on hapi.js    |[twitter-web](https://github.com/rum37676/twitter-web)|  [Link to video tour]() | [web-app](https://safe-brushlands-98673.herokuapp.com/) |
-| **twitter-client**   | SPA, based on Aurelia	      |[twitter-client](https://github.com/rum37676/twitter-client)| [Link to video tour]()| [single-page-app](https://safe-brushlands-98673.herokuapp.com/client/) |
+| **twitter-web**      | web app, based on hapi.js    |[twitter-web](https://github.com/rum37676/twitter-web)|  [Link to video tour](https://youtu.be/Q5cM2pLERxE) | [web-app](https://safe-brushlands-98673.herokuapp.com/) |
+| **twitter-client**   | SPA, based on Aurelia	      |[twitter-client](https://github.com/rum37676/twitter-client)| [Link to video tour](https://youtu.be/Q5cM2pLERxE)| [single-page-app](https://safe-brushlands-98673.herokuapp.com/client/) |
 
 New users can be created, but to test the administration features, the use of a dedicated admin user is required:
 
