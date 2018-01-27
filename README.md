@@ -54,7 +54,7 @@ payload: {
     //output: 'stream',   <--------------------
     allow: ['application/json', 'multipart/form-data'],
     maxBytes: '104857600',
-  },
+    },
 I could not find the bug, why this dont work with the apitests...
 
 
