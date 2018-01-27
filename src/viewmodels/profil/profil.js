@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import TwitterService from '../../services/twitter-service';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {UserUpdate} from '../../services/messages';
+import {UserUpdate, TweetUpdate} from '../../services/messages';
 
 @inject(TwitterService, EventAggregator)
 export class Profil {
@@ -13,14 +13,20 @@ export class Profil {
   name = '';
   email = '';
   password = '';
+  numberOfOwnTweets = 0;
 
   constructor(ts, ea) {
     this.twitterService = ts;
     this.ea = ea;
     this.updateUser();
+    this.calculateNumberOfTweets();
     this.ea.subscribe(UserUpdate, msg => {
       this.updateUser();
     });
+    this.ea.subscribe(TweetUpdate, msg => {
+      this.calculateNumberOfTweets();
+    });
+    this.numberOfOwnTweets;
   }
 
   updateUser() {
@@ -61,13 +67,13 @@ export class Profil {
     return number;
   }
 
-  getNumberOfTweets() {
-    let number = 0;
+  calculateNumberOfTweets() {
+    this.numberOfOwnTweets = 0;
     for (let tweet of this.twitterService.tweets) {
       if (tweet.tweeter._id === this.ownUser._id) {
-        number++;
+        this.numberOfOwnTweets++;
       }
     }
-    return number;
+    console.log(this.numberOfOwnTweets);
   }
 }
