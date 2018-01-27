@@ -1,6 +1,6 @@
 import {inject, Aurelia} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {LoginStatus} from './services/messages';
+import {LoginStatus, OwnUserUpdate, TweetUpdate, UserUpdate} from './services/messages';
 import TwitterService from './services/twitter-service';
 
 @inject(TwitterService, Aurelia, EventAggregator)
@@ -11,11 +11,21 @@ export class App {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(LoginStatus, msg => {
+      console.log('app subscribe');
+      console.log(msg);
       if (msg.status.changed === true) {
         this.router.navigate('/', { replace: true, trigger: false });
         this.router.reset();
         if (msg.status.success === true) {
-          au.setRoot('home');
+          Promise.all([
+            this.twitterService.updateData()
+          ]).then(res => {
+            this.au.setRoot('home').then(() => {
+              this.router.navigateToRoute('globalTimeline');
+            });
+          }).catch(error => {
+            console.error(error);
+          });
         } else {
           au.setRoot('app');
         }
@@ -32,16 +42,7 @@ export class App {
   }
 
   attached() {
-    if (this.twitterService.isAuthenticated()) {
-      Promise.all([
-        this.twitterService.updateData()
-      ]).then(res => {
-        this.au.setRoot('home').then(() => {
-          this.router.navigateToRoute('globalTimeline');
-        });
-      }).catch(error => {
-        console.error(error);
-      });
-    }
+    console.log('app attached');
+    this.twitterService.isAuthenticated();
   }
 }

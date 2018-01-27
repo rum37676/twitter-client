@@ -21,6 +21,7 @@ export default class TwitterService {
     });
     this.ea.subscribe(LoginStatus, msg => {
       if (msg.status.success === true) {
+        console.log('twitter-service: updateData');
         this.updateData();
       } else {
         this.ac.clearAuthentication();
@@ -41,6 +42,7 @@ export default class TwitterService {
       this.ea.publish(new TweetUpdate());
       this.ea.publish(new UserUpdate());
       this.ea.publish(new OwnUserUpdate(this.ownUser));
+      console.log('twitter-service: updateData done');
     }).catch(error => {
       console.error(error);
     });
@@ -48,7 +50,7 @@ export default class TwitterService {
 
   saveTweet(tweetText, tweetImage) {
     let formData = new FormData();
-    formData.append('tweetText', tweetText);
+    formData.append('text', tweetText);
     if (typeof tweetImage !== 'undefined') {
       formData.append('tweetImage', tweetImage);
     }
@@ -180,6 +182,7 @@ export default class TwitterService {
       changed: true
     };
     this.ac.clearAuthentication();
+    console.log('publish: twitter-service: logout');
     this.ea.publish(new LoginStatus(status));
   }
 }

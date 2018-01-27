@@ -20,7 +20,7 @@ export class Login {
       this.rememberMe = loginOptions.rememberMe;
     }
     this.ea.subscribe(LoginStatus, msg => {
-      if (msg.status.success !== true) {
+      if (msg.status.success !== true && msg.status.changed !== true) {
         this.error = true;
       }
     });

@@ -10,13 +10,12 @@ export default class AsyncHttpClient {
   constructor(httpClient, fixtures, ea) {
     this.http = httpClient;
     this.http.configure(http => {
-      http.withBaseUrl(fixtures.baseUrlLocal);
+      http.withBaseUrl(fixtures.baseUrlOnline);
     });
     this.ea = ea;
   }
 
   isAuthenticated() {
-    let authenticated = false;
     if (localStorage.sessionTokenTwitter !== 'null' && typeof localStorage.sessionTokenTwitter !== 'undefined') {
       this.http.configure(http => {
         const auth = JSON.parse(localStorage.sessionTokenTwitter);
@@ -27,17 +26,35 @@ export default class AsyncHttpClient {
         this.http.get('api/users/validate')
       ]).then(res => {
         // token is valid
-        authenticated = true;
+        let status = {
+          success: true,
+          changed: true,
+          message: 'user is authenticated'
+        }
+        console.log('publish: async-http-client: isAuthenticated1');
+        this.ea.publish(new LoginStatus(status));
         return true;
       }).catch(error => {
         // token is not valid
-        //console.error(error);
+        let status = {
+          success: false,
+          changed: true,
+          message: 'user is not authenticated'
+        }
         this.clearAuthentication();
-        return false;
+        console.log('publish: async-http-client: isAuthenticated2');
+        this.ea.publish(new LoginStatus(status));
       });
-    } else {
-      return false;
-    }
+    }/* else {
+      let status = {
+        success: false,
+        changed: false,
+        message: 'user is not authenticated'
+      }
+      this.clearAuthentication();
+      console.log('publish: async-http-client: isAuthenticated3');
+      this.ea.publish(new LoginStatus(status));
+    }*/
   }
 
   authenticate(url, user) {
@@ -54,12 +71,14 @@ export default class AsyncHttpClient {
       } else {
         console.log('authentication failed: could not log in user: ' + user.email);
       }
+      console.log('publish: async-http-client: authenticate1');
       this.ea.publish(new LoginStatus(status));
     }).catch(error => {
       const status = {
         success: false,
         message: 'service not available'
       };
+      console.log('publish: async-http-client: authenticate2');
       this.ea.publish(new LoginStatus(status));
     });
   }

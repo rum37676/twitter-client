@@ -1,10 +1,10 @@
 <template bindable="router">
 
-  <nav class="ui inverted blue menu">
+  <nav class="ui blue inverted menu">
     <header class="header item"><a href="/"> Twitter </a></header>
     <div class="right menu">
       <div  repeat.for="navItem of router.navigation">
-        <a class="${navItem.isActive ? 'active' : ''} item" show.bind="showNav(navItem)" href.bind="navItem.href">${navItem.title}</a>
+        <a class="${navItem.isActive ? 'active' : ''} item" show.bind="showNav(navItem)" href.bind="navItem.href" style="font-weight: bold">${navItem.title}</a>
       </div>
     </div>
   </nav>

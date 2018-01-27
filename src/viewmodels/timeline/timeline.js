@@ -20,7 +20,7 @@ export class Timeline {
     this.twitterService.deleteTweet(tweet);
   }
 
-  allowDelete(tweet) {
+  canDelete(tweet) {
     if (this.twitterService.ownUser !== null && this.twitterService.ownUser !== undefined) {
       if (tweet.tweeter._id === this.twitterService.ownUser._id || this.twitterService.ownUser.role === 'admin') {
         return true;
@@ -45,5 +45,11 @@ export class Timeline {
         }
       }
     }
+  }
+
+  getDateInFormat(tweet) {
+    return tweet.date.
+    replace(/T/, ' ').
+    replace(/\..+/, '');
   }
 }

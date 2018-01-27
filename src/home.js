@@ -27,10 +27,4 @@ export class Home {
       return 'home';
     });
   }
-
-  attached() {
-    if (this.twitterService.isAuthenticated()) {
-      this.twitterService.updateData();
-    }
-  }
 }

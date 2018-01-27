@@ -12,6 +12,7 @@ export class Users {
     this.twitterService = ts;
     this.ea = ea;
     this.updateUsers();
+    console.log('users constructor');
     this.ea.subscribe(UserUpdate, msg => {
       this.updateUsers();
     });
