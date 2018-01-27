@@ -11,8 +11,6 @@ export class App {
     this.twitterService = ts;
     this.ea = ea;
     this.ea.subscribe(LoginStatus, msg => {
-      console.log('app subscribe');
-      console.log(msg);
       if (msg.status.changed === true) {
         this.router.navigate('/', { replace: true, trigger: false });
         this.router.reset();
@@ -42,7 +40,6 @@ export class App {
   }
 
   attached() {
-    console.log('app attached');
     this.twitterService.isAuthenticated();
   }
 }

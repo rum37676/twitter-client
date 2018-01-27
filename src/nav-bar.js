@@ -8,11 +8,9 @@ export class NavBar {
 
   constructor(ts) {
     this.twitterService = ts;
-    console.log('nav-bar constructor');
   }
 
   showNav(navItem) {
-    console.log('nav-bar showNav: ' + navItem.title);
     if (!navItem.config.role) {
       return true;
     }

@@ -42,7 +42,6 @@ export default class TwitterService {
       this.ea.publish(new TweetUpdate());
       this.ea.publish(new UserUpdate());
       this.ea.publish(new OwnUserUpdate(this.ownUser));
-      console.log('twitter-service: updateData done');
     }).catch(error => {
       console.error(error);
     });
@@ -117,6 +116,7 @@ export default class TwitterService {
     this.ac.post('/api/users/me', user).then(res => {
       this.getUsers();
       this.getMe();
+      this.getTweets();
     });
   }
 

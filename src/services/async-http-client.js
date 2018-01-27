@@ -31,7 +31,6 @@ export default class AsyncHttpClient {
           changed: true,
           message: 'user is authenticated'
         }
-        console.log('publish: async-http-client: isAuthenticated1');
         this.ea.publish(new LoginStatus(status));
         return true;
       }).catch(error => {
@@ -42,19 +41,9 @@ export default class AsyncHttpClient {
           message: 'user is not authenticated'
         }
         this.clearAuthentication();
-        console.log('publish: async-http-client: isAuthenticated2');
         this.ea.publish(new LoginStatus(status));
       });
-    }/* else {
-      let status = {
-        success: false,
-        changed: false,
-        message: 'user is not authenticated'
-      }
-      this.clearAuthentication();
-      console.log('publish: async-http-client: isAuthenticated3');
-      this.ea.publish(new LoginStatus(status));
-    }*/
+    }
   }
 
   authenticate(url, user) {
@@ -71,14 +60,12 @@ export default class AsyncHttpClient {
       } else {
         console.log('authentication failed: could not log in user: ' + user.email);
       }
-      console.log('publish: async-http-client: authenticate1');
       this.ea.publish(new LoginStatus(status));
     }).catch(error => {
       const status = {
         success: false,
         message: 'service not available'
       };
-      console.log('publish: async-http-client: authenticate2');
       this.ea.publish(new LoginStatus(status));
     });
   }

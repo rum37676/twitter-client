@@ -74,6 +74,5 @@ export class Profil {
         this.numberOfOwnTweets++;
       }
     }
-    console.log(this.numberOfOwnTweets);
   }
 }
