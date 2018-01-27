@@ -50,11 +50,15 @@ Admins has extended rights: They can delete users and their tweets. Also they ha
 ## Special Note for API tests
 
 The API tests will not work with the current deployed [twitter-web](https://safe-brushlands-98673.herokuapp.com/) instance. They will work, if you comment out following line of tweetapi.create:
+
+```javascript
 payload: {
     //output: 'stream',   <--------------------
     allow: ['application/json', 'multipart/form-data'],
     maxBytes: '104857600',
     },
+```
+
 I could not find the bug, why this dont work with the apitests...
 
 
